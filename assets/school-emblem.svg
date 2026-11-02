@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 86" role="img" aria-label="ตรา HR">
+  <path d="M4 5 32 0 60 6 56 65 32 84 8 66Z" fill="#7c1f2c"/>
+  <path d="M10 10 32 5 54 11 51 62 32 77 13 62Z" fill="none" stroke="#e6d3a8" stroke-width="1.4"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#fff">HR</text>
+  <circle cx="32" cy="70" r="2" fill="#e6d3a8"/>
+</svg>
