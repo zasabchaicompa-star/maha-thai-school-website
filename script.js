@@ -6,7 +6,7 @@ const placeData = {
   mary: {
     number: '02 / 04', title: 'อาคารเซนต์เมรี่', type: 'อาคารเรียน',
     description: 'อาคารเซนต์เมรี่ตามภาพถ่ายที่ได้รับ สามารถเพิ่มเติมรายละเอียดการใช้งาน ห้องเรียน และสิ่งอำนวยความสะดวกได้ภายหลัง',
-    image: 'assets/building-saint-mary.avif', imageAlt: 'อาคารเซนต์เมรี่ โรงเรียนมหาไถ่ศึกษาเลย พร้อมนักเรียนร่วมกิจกรรมด้านหน้าอาคาร'
+    image: 'assets/building-saint-mary.jpg', imageAlt: 'อาคารเซนต์เมรี่ โรงเรียนมหาไถ่ศึกษาเลย พร้อมนักเรียนร่วมกิจกรรมด้านหน้าอาคาร'
   },
   dominic: {
     number: '03 / 04', title: 'อาคารดอมินิก ซาวีโอ', type: 'อาคารเรียน',
@@ -82,6 +82,7 @@ function showImageViewer(src, altText) {
   if (!imageViewer || !imageViewerMedia || !src) return;
   lastImageTrigger = document.activeElement;
   imageViewerMedia.replaceChildren();
+  imageViewerMedia.classList.remove('is-zoomed');
   const fullImage = document.createElement('img');
   fullImage.src = src;
   fullImage.alt = altText || 'ภาพถ่ายโรงเรียนมหาไถ่ศึกษาเลย';
@@ -117,6 +118,7 @@ function hideImageViewer() {
   imageViewer.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('image-viewer-open');
   imageViewerMedia?.replaceChildren();
+  imageViewerMedia?.classList.remove('is-zoomed');
   if (lastImageTrigger && typeof lastImageTrigger.focus === 'function') lastImageTrigger.focus();
 }
 
@@ -150,6 +152,12 @@ document.addEventListener('keydown', event => {
     event.preventDefault();
     if (event.target.matches('img')) showImageViewer(event.target.currentSrc || event.target.src, event.target.alt);
     else showImageViewer(event.target.dataset.imageOpen, event.target.dataset.imageAlt || event.target.getAttribute('aria-label'));
+  }
+});
+
+imageViewerMedia?.addEventListener('click', event => {
+  if (event.target instanceof HTMLImageElement) {
+    imageViewerMedia.classList.toggle('is-zoomed');
   }
 });
 
