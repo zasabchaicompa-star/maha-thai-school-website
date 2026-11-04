@@ -36,7 +36,7 @@
 
   <main id="main">
     <section class="hero" id="home">
-      <div class="hero-image" role="img" aria-label="ภาพอาคารเซนต์เมรี่และกิจกรรมของนักเรียนโรงเรียนมหาไถ่ศึกษาเลย"></div>
+      <div class="hero-image" role="button" tabindex="0" data-image-open="assets/building-saint-mary.jpg" data-image-alt="ภาพถ่ายจริงอาคารเซนต์เมรี่และนักเรียนร่วมกิจกรรมหน้าอาคาร" aria-label="เปิดดูภาพอาคารเซนต์เมรี่ขนาดใหญ่"></div>
       <div class="hero-shade"></div>
       <div class="hero-content wrap">
         <p class="eyebrow"><span></span> HOLY REDEEMER LOEI SCHOOL</p>
@@ -84,7 +84,7 @@
         </div>
         <div class="tour-layout">
           <div class="map-frame">
-            <div class="map-topline"><span><i class="live-dot"></i> CAMPUS EXPLORER</span><span>ISOMETRIC VIEW</span></div>
+            <div class="map-topline"><span><i class="live-dot"></i> CAMPUS EXPLORER</span><button class="map-expand-button" type="button" id="mapExpandButton">ขยายแผนที่ <span aria-hidden="true">⤢</span></button></div>
             <svg class="campus-map" viewBox="0 0 1000 650" role="img" aria-labelledby="mapTitle mapDesc">
               <title id="mapTitle">แผนที่จำลอง 3 มิติ โรงเรียนมหาไถ่ศึกษาเลย</title>
               <desc id="mapDesc">ผังจำลองมุมมองเฉียง แสดงอาคารเรียนสามหลัง ทางเดิน พื้นที่สีเขียว และทางเข้า สามารถเลือกอาคารเพื่ออ่านข้อมูลได้</desc>
@@ -206,7 +206,7 @@
     <section class="section activities-section" id="activities">
       <div class="wrap activities-grid">
         <div><p class="section-kicker">SCHOOL LIFE</p><h2>เรื่องราวและกิจกรรม<br><em>ในรั้วโรงเรียน</em></h2><p>พื้นที่สำหรับนำเสนอข่าวประชาสัมพันธ์ กิจกรรมการเรียนรู้ การแข่งขัน กีฬา และความสำเร็จของนักเรียน</p><a class="button button-dark" href="https://hrls.ac.th/" target="_blank" rel="noopener">ดูข่าวจากเว็บไซต์โรงเรียน ↗</a></div>
-        <div class="activity-placeholder"><div class="activity-graphic"><span>HR</span><i>✦</i><b>LEARN · GROW · INSPIRE</b></div><p>พื้นที่สำหรับภาพกิจกรรมล่าสุด</p><small>ผู้ดูแลเว็บไซต์สามารถเปลี่ยนเป็นภาพกิจกรรมจริงได้</small></div>
+        <figure class="activity-photo-card"><img src="assets/building-saint-mary.jpg" alt="นักเรียนโรงเรียนมหาไถ่ศึกษาเลยร่วมกิจกรรม Learning Outside the Classroom หน้าอาคารเซนต์เมรี่" loading="lazy"><figcaption>ภาพถ่ายจริง: กิจกรรมนักเรียนหน้าอาคารเซนต์เมรี่</figcaption></figure>
       </div>
     </section>
 
@@ -227,6 +227,14 @@
     <div class="wrap footer-inner"><a class="footer-brand" href="#home">HOLY REDEEMER LOEI SCHOOL</a><span>© <span id="year"></span> Virtual Campus Concept</span><a href="#home">กลับขึ้นด้านบน ↑</a></div>
     <div class="wrap footer-note">เว็บไซต์ต้นแบบเพื่อการนำเสนอและประชาสัมพันธ์ ไม่ใช่เว็บไซต์ทางการของโรงเรียน ข้อมูล ภาพ และผังสถานที่ควรได้รับการตรวจสอบและอนุญาตก่อนเผยแพร่จริง</div>
   </footer>
+  <div class="image-viewer" id="imageViewer" role="dialog" aria-modal="true" aria-label="ดูภาพขนาดใหญ่" aria-hidden="true" hidden>
+    <div class="image-viewer-panel">
+      <button class="image-viewer-close" id="imageViewerClose" type="button" aria-label="ปิดภาพ">×</button>
+      <div class="image-viewer-media" id="imageViewerMedia"></div>
+      <p class="image-viewer-caption" id="imageViewerCaption"></p>
+      <p class="image-viewer-help">กด Esc หรือแตะพื้นที่ด้านนอกเพื่อปิด</p>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

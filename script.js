@@ -70,3 +70,91 @@ mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () 
 }));
 
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Open all school photos at their original file dimensions; the header emblem remains unchanged.
+const imageViewer = document.getElementById('imageViewer');
+const imageViewerMedia = document.getElementById('imageViewerMedia');
+const imageViewerCaption = document.getElementById('imageViewerCaption');
+const imageViewerClose = document.getElementById('imageViewerClose');
+let lastImageTrigger = null;
+
+function showImageViewer(src, altText) {
+  if (!imageViewer || !imageViewerMedia || !src) return;
+  lastImageTrigger = document.activeElement;
+  imageViewerMedia.replaceChildren();
+  const fullImage = document.createElement('img');
+  fullImage.src = src;
+  fullImage.alt = altText || 'ภาพถ่ายโรงเรียนมหาไถ่ศึกษาเลย';
+  fullImage.decoding = 'async';
+  imageViewerMedia.appendChild(fullImage);
+  imageViewerCaption.textContent = altText || 'ภาพถ่ายโรงเรียนมหาไถ่ศึกษาเลย';
+  imageViewer.hidden = false;
+  imageViewer.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('image-viewer-open');
+  imageViewerClose?.focus();
+}
+
+function showMapViewer() {
+  const originalMap = document.querySelector('.campus-map');
+  if (!originalMap || !imageViewer) return;
+  lastImageTrigger = document.activeElement;
+  imageViewerMedia.replaceChildren();
+  const mapCopy = originalMap.cloneNode(true);
+  mapCopy.classList.add('image-viewer-map');
+  mapCopy.removeAttribute('role');
+  mapCopy.setAttribute('aria-label', 'แผนที่จำลอง 3 มิติของโรงเรียนมหาไถ่ศึกษาเลย');
+  imageViewerMedia.appendChild(mapCopy);
+  imageViewerCaption.textContent = 'แผนที่จำลอง 3 มิติ — ใช้เพื่อประกอบการเยี่ยมชม ไม่ใช่ผังสถานที่จริง';
+  imageViewer.hidden = false;
+  imageViewer.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('image-viewer-open');
+  imageViewerClose?.focus();
+}
+
+function hideImageViewer() {
+  if (!imageViewer) return;
+  imageViewer.hidden = true;
+  imageViewer.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('image-viewer-open');
+  imageViewerMedia?.replaceChildren();
+  if (lastImageTrigger && typeof lastImageTrigger.focus === 'function') lastImageTrigger.focus();
+}
+
+document.querySelectorAll('img:not(.brand-logo)').forEach(image => {
+  image.tabIndex = 0;
+  image.setAttribute('role', 'button');
+  image.setAttribute('aria-label', image.alt ? 'เปิดดูภาพขนาดใหญ่: ' + image.alt : 'เปิดดูภาพขนาดใหญ่');
+  image.title = 'กดเพื่อดูภาพขนาดใหญ่';
+});
+
+document.addEventListener('click', event => {
+  if (event.target.closest('#imageViewer')) return;
+  const image = event.target.closest('img:not(.brand-logo)');
+  if (image) {
+    showImageViewer(image.currentSrc || image.src, image.alt);
+    return;
+  }
+  const heroImage = event.target.closest('.hero-image[data-image-open]');
+  if (heroImage) {
+    showImageViewer(heroImage.dataset.imageOpen, heroImage.dataset.imageAlt || heroImage.getAttribute('aria-label'));
+  }
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && imageViewer && !imageViewer.hidden) {
+    hideImageViewer();
+    return;
+  }
+  if (event.target.closest('#imageViewer')) return;
+  if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('img:not(.brand-logo), .hero-image[data-image-open]')) {
+    event.preventDefault();
+    if (event.target.matches('img')) showImageViewer(event.target.currentSrc || event.target.src, event.target.alt);
+    else showImageViewer(event.target.dataset.imageOpen, event.target.dataset.imageAlt || event.target.getAttribute('aria-label'));
+  }
+});
+
+imageViewer?.addEventListener('click', event => {
+  if (event.target === imageViewer) hideImageViewer();
+});
+imageViewerClose?.addEventListener('click', hideImageViewer);
+document.getElementById('mapExpandButton')?.addEventListener('click', showMapViewer);
